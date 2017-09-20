@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title>SpringMVC Demo 首页</title>
+
+    <!-- 新 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="//cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">我的网站</a>
+        </div>
+        <ul class="nav navbar-nav">
+
+            <li><a href="http://p.nju.edu.cn/portal/index.html?v=201606170634">南京大学</a></li>
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">虎扑
+                    <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="http://hupu.com">虎扑首页</a></li>
+                    <li><a href="https://my.hupu.com/262990577465364">我的首页</a></li>
+                    <li><a href="https://my.hupu.com/262990577465364/playbyplay">我的动态</a></li>
+                    <li><a href="https://my.hupu.com/262990577465364/topic">我的帖子</a></li>
+                    <li><a href="https://my.hupu.com/262990577465364/recs">我的推荐</a></li>
+                </ul>
+            </li>
+
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">微博
+                    <span class="caret"></span></a>
+                <ul class=dropdown-menu>
+                    <li><a href="http://weibo.com">新浪微博首页</a></li>
+                    <li><a href="http://www.weibo.com/1772729170/profile?topnav=1&wvr=6">我的微博</a></li>
+                    <li><a href="http://weibo.com/u/1846131072?topnav=1&wvr=6&topsug=1">波波哥哥的微博</a></li>
+                </ul>
+            </li>
+
+            <li><a href="http://google.com.hk">Google</a></li>
+            <li><a href="http://218.94.159.99/">Moodle</a></li>
+        </ul>
+
+        <form class="navbar-form navbar-left">
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="Search">
+            </div>
+            <button class="btn btn-default" type="submit">
+                <i class="glyphicon glyphicon-search"></i>
+            </button>
+        </form>
+
+        <ul class="nav navbar-nav navbar-right">
+            <%--<span class="glyphicon glyphicon-user"></span>--%>
+            <li><a href="#" data-toggle="modal" data-target="#myModal1" ><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Sign Up</a></li>
+            <li><a href="file:///C:/Users/dell-/Desktop/HTMLLearnning/Program3.html"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+        </ul>
+    </div>
+</nav>
+
+<div class="dropdown">
+    <button type="button" class="btn dropdown-toggle" id="dropdownBT1" data-toggle="dropdown">主题
+        <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownBT1">
+        <li role="presentation"><a href="#" role="menuitem" tabindex="-1"></a></li>
+        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">数据挖掘</a></li>
+        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">数据通信/网络</a></li>
+        <li role="presentation" class="divider"></li>
+        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">分离的链接</a></li>
+    </ul>
+</div>
+
+<div class="modal fade" id="myModal1" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+                <div class="signin-form profile">
+                    <h3 class="agileinfo_sign">Register</h3>
+                    <div class="login-form" id="container">
+                        <form action="#" method="post">
+                            <input type="text" name="name" placeholder="用户名" v-model="username" required="">
+                            <input type="number" name="number" placeholder="手机号码" v-model="phoneNumber" required="">
+                            <input type="email" name="email" placeholder="邮箱" v-model="email" required="">
+                            <input type="password" name="password" placeholder="密码" v-model="password" required="">
+                            <input type="password" name="password" placeholder="确认密码" required="">
+                            <button type="button" class="btn btn-lg" @click.prevent="signUp()">Submit</button>
+                        </form>
+                    </div>
+                    <p><a href="#"> 我同意网站的相关条款</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="../vue/vue.js"></script>
+<script src="../vue-resource/vue-resource.js"></script>
+
+<script src="../js/pages/index.js"></script>
+
+<!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+
+<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+<script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+</body>
+
+</html>
