@@ -13,6 +13,9 @@
         <link rel="stylesheet" href="dist/css/font-awesome.css">
         <link rel="stylesheet" href="dist/css/bootstrap.min.css">
         <link rel="stylesheet" href="dist/css/templatemo-style.css">
+
+        <script src="ckeditor/ckeditor.js"></script>
+
         <script src="js/vendor/modernizr-2.6.2.min.js"></script>
     </head>
     <body>
@@ -86,7 +89,7 @@
                 <div class="col-md-9 col-sm-12 content-holder">
                     <!-- CONTENT -->
                     <div id="menu-container">
-                        
+
                         <div class="logo-holder logo-top-margin">
                             <a href="#" class="site-brand"><img src="dist/images/avatar.png" alt=""></a>
                         </div>
@@ -331,17 +334,19 @@
                                                 <h3 style="color:black;font-size:35px;">Catalogue</h3>
                                             </div>
                                             <div class="col-md-3">
-                                                <button class="btn btn-default">Write New Article</button>
+                                                <button id="writeNewArticleBT" class="btn btn-default">Write New Article</button>
                                             </div>
                                         </div>
                                         <br>
                                         <div class="row">
                                             <div class="col-xs-9">
                                                 <ul class="list-unstyled" >
-                                                    <li v-for="article in articles" @click="showArticleContent($event)">
+                                                    <li v-for="article in articles">
                                                        <div class="row">
-                                                           <a href="#"  class="col-md-8 col-sm-8" style="font-size:16px"><i class="fa fa-file">&nbsp;&nbsp;</i>{{article.title}}</a>
+                                                           <a href="#"  class="col-md-6 col-sm-6" style="font-size:16px" @click="showArticleContent($event)"><i class="fa fa-file">&nbsp;&nbsp;</i>{{article.title}}</a>
                                                            <a class="col-md-4 col-sm-4" style="font-size:14px">{{article.date}}</a>
+                                                           <a href="#" class="col-md-1 col-sm-1 fa fa-pencil small" @click="updateArticle()"></a>
+                                                           <a href="#" class="col-md-1 col-sm-1 fa fa-remove small" @click="deleteArticle"></a>
                                                            <br>
                                                        </div>
                                                     </li>
@@ -422,6 +427,31 @@
 
                             </div>
                         </div>
+
+                        <div id="writeArticilePanel" class="content writeArticle-section">
+
+                            <div class="panel">
+                                <div class="panel-body">
+                                    <form style="color: black">
+
+                                        <label for="title" class="col-sm-2 control-label">Title</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="title" v-model="new_title" placeholder="请输入日志标题">
+                                        </div>
+
+                                        <textarea name="editor1" id="editor1" rows="10" cols="80">
+
+                                        </textarea>
+                                    </form>
+
+                                    <div class="btn-group">
+                                        <button class="btn btn-success" id="saveArticleBT" @click="saveArticle()" >Save</button>
+                                        <button id="cancelAddArticleBT" class="btn btn-default" >Back</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
 
@@ -553,7 +583,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-12 text-center">
-                        <p>Copyright &copy; 2084 Company Name | More Templates <a href="http://www.cssmoban.com/" target="_blank" title="模板之家">模板之家</a> - Collect from <a href="http://www.cssmoban.com/" title="网页模板" target="_blank">网页模板</a></p>
+                        <p>Copyright &copy; 2017 Company Name | Nanjing University <a href="https://www.nju.edu.cn/" target="_blank" title="南京大学">南京大学</a> Deng Cong</p>
                     </div>
                 </div>
             </div>
@@ -561,10 +591,10 @@
 
         <script src="js/vendor/jquery-1.10.2.min.js"></script>
 
-        <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+        <!--&lt;!&ndash; jQuery文件。务必在bootstrap.min.js 之前引入 &ndash;&gt;-->
         <script src="js/jquery-1.10.2.min.js"></script>
 
-        <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+        <!--&lt;!&ndash; 最新的 Bootstrap 核心 JavaScript 文件 &ndash;&gt;-->
         <script src="js/bootstrap.min.js"></script>
 
         <script src="vue/vue.js"></script>
@@ -573,9 +603,17 @@
         <script src="js/validator.min.js"></script>
         <script src="js/pages/index.js"></script>
 
-        <script src="js/plugins.js"></script>
+        <script>
+            // Replace the <textarea id="editor1"> with a CKEditor
+            // instance, using default configuration.
+             CKEDITOR.replace( 'editor1' );
+        </script>
+
+
+        <!--<script src="js/plugins.js"></script>-->
         <script src="js/main.js"></script>
 
-		<!-- templatemo 439 rectangle -->
+
+        <!-- templatemo 439 rectangle -->
     </body>
 </html>

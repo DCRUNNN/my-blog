@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>A Simple Page with CKEditor</title>
+    <!-- Make sure the path to CKEditor is correct. -->
+    <script src="ckeditor/ckeditor.js"></script>
+</head>
+<body>
+
+<textarea cols="80" id="editor2" name="editor2" rows="10">
+	</textarea>
+<div id="content2" style="display: none">
+    <p>The number of <code>change</code> events: <strong><span id="changes"></span></strong>.</p>
+    <h3>Mirrored Content</h3>
+    <!-- This <div> will be used to display the editor content. -->
+    <div id="editorcontent2">
+    </div>
+</div>
+
+<script>
+    (function () {
+        var changesCount = 0;
+        var editor2 = CKEDITOR.replace( 'editor2', {
+            removePlugins: 'sourcearea'
+
+        } );
+        editor2.on( 'change', function ( ev ) {
+            changesCount++;
+            document.getElementById( 'content2' ).style.display = '';
+            document.getElementById( 'changes' ).innerHTML = changesCount.toString();
+            document.getElementById( 'editorcontent2' ).innerHTML = editor2.getData();
+        } );
+    })();
+</script>
+
+</div>
+
+
+
+<script src="js/vendor/jquery-1.10.2.min.js"></script>
+
+<!--&lt;!&ndash; jQuery文件。务必在bootstrap.min.js 之前引入 &ndash;&gt;-->
+<script src="js/jquery-1.10.2.min.js"></script>
+
+<!--&lt;!&ndash; 最新的 Bootstrap 核心 JavaScript 文件 &ndash;&gt;-->
+<script src="js/bootstrap.min.js"></script>
+
+<script src="vue/vue.js"></script>
+<script src="vue-resource/vue-resource.js"></script>
+
+<script src="js/validator.min.js"></script>
+<script src="js/pages/index.js"></script>
+
+<script>
+    // Replace the <textarea id="editor1"> with a CKEditor
+    // instance, using default configuration.
+    CKEDITOR.replace( 'editor1' );
+</script>
+
+<!--<script src="js/plugins.js"></script>-->
+<script src="js/main.js"></script>
+
+
+</body>
+
+
+
+
+</html>

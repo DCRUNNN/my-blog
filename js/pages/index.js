@@ -8,6 +8,7 @@ var vm  = new Vue({
         one_title:'日志标题',
         one_content:'日志内容',
         one_date:'日志发表时间',
+        new_title:'',
 
         articles:[
 
@@ -108,9 +109,77 @@ var vm  = new Vue({
             $(".logo-top-margin").animate({marginLeft:'0'}, "slow");
 
             setTimeout(function () {
-                $(document.body).animate({scrollTop : 200},875);
+                $(document.body).animate({scrollTop : 400},875);
             }, 500);
 
+        },
+
+        saveArticle:function () {
+
+            if(this.new_title=="") {
+                alert("请输入日志标题！");
+                return;
+            }
+            var content= CKEDITOR.instances.editor1.getData();
+            if(content=="") {
+                alert("请输入日志内容！");
+                return;
+            }
+            
+            this.$http.post("http://localhost:8080/article/saveArticle", {
+                    title:this.new_title,
+                    content:content,
+                    articleID:'',
+                    date:''
+                }
+            ).then(function (response) {
+               if(response.data.errorCode==0) {
+                   alert("添加文章成功");
+                   this.getArticleInfoForCatalogue();
+
+                   $("#writeArticilePanel").slideUp("slow");
+                   $("#menu-5").slideDown("slow");
+                   $(document.body).animate({scrollTop : 0},875);
+
+               }else{
+                   alert("添加文章失败");
+               }
+            }).catch(function (error) {
+                console.log(error);
+                alert("添加文章失败！");
+            });
+
+        },
+
+        updateArticle:function () {
+            var date = $.trim(event.target.previousElementSibling.text);
+            alert(date);
+        },
+
+        deleteArticle:function () {
+            var date = $.trim(event.target.previousElementSibling.previousElementSibling.text);
+            this.$http.delete("http://localhost:8080/article/deteleArticle", {
+                    body:{date:date}
+                }
+            ).then(function (response) {
+                if(response.data.errorCode==0) {
+                    alert("删除文章成功");
+                    this.getArticleInfoForCatalogue();
+
+                    $("#menu-5").slideUp("slow");
+                    $("#menu-5").slideDown("slow");
+                    $(document.body).animate({scrollTop : 0},875);
+
+                }else{
+                    alert("删除文章失败");
+                    console.log(date)
+                    console.log(response.data)
+                }
+            }).catch(function (error) {
+                console.log(error);
+                console.log(date)
+                alert("删除文章失败！");
+            });
         }
 
     },

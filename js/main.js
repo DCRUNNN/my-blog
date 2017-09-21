@@ -90,5 +90,28 @@
         $(document.body).animate({scrollTop : 0},875);
     });
 
+    $("#writeNewArticleBT").click(function(){
+        $("#myArticlePanel").slideUp("slow");
+        $("#menu-5").slideUp("slow");
+        $("#writeArticilePanel").slideDown("slow");
+        $(".logo-top-margin").animate({marginTop:'0'}, "slow");
+        $(".logo-top-margin").animate({marginLeft:'0'}, "slow");
+
+        //导航进度条回到顶部
+        $(document.body).animate({scrollTop : 0},875);
+    });
+
+    $("#cancelAddArticleBT").click(function(){
+        $("#writeArticilePanel").slideUp("slow");
+        $("#menu-5").slideDown("slow");
+        $(".logo-top-margin").animate({marginTop:'0'}, "slow");
+        $(".logo-top-margin").animate({marginLeft:'0'}, "slow");
+
+        //导航进度条回到顶部
+        $(document.body).animate({scrollTop : 0},875);
+    });
+
+
+
 
 })(jQuery);
