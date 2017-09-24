@@ -59,6 +59,7 @@ var vm  = new Vue({
             ).then(function (response) {
                 if (response.data.errorCode == 0) {
                     alert("登录成功！");
+                    document.getElementById("showUser").innerHTML=this.username;
                     $(function () { $('#myModal2').modal('hide')});
                 }else if(response.data.errorCode==-1) {
                     alert("用户名不存在！")
