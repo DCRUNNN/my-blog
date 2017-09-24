@@ -343,10 +343,12 @@
                                                 <ul class="list-unstyled" >
                                                     <li v-for="article in articles">
                                                        <div class="row">
-                                                           <a href="#"  class="col-md-6 col-sm-6" style="font-size:16px" @click="showArticleContent($event)"><i class="fa fa-file">&nbsp;&nbsp;</i>{{article.title}}</a>
-                                                           <a class="col-md-4 col-sm-4" style="font-size:14px">{{article.date}}</a>
-                                                           <a href="#" class="col-md-1 col-sm-1 fa fa-pencil small" @click="updateArticle()"></a>
-                                                           <a href="#" class="col-md-1 col-sm-1 fa fa-remove small" @click="deleteArticle"></a>
+                                                           <a href="#" class="col-md-6 col-sm-6" style="font-size:16px" @click="showArticleContent($event)"><i class="fa fa-file">&nbsp;&nbsp;</i>{{article.title}}</a>
+                                                           <a class="col-md-4 col-sm-4" id="deleteDate" style="font-size:14px">{{article.date}}</a>
+                                                           <a href="#" id="updateArticleBT" class="col-md-1 col-sm-1 fa fa-pencil small" @click="updateArticle()"></a>
+                                                           <!--<a href="#" class="col-md-1 col-sm-1 fa fa-remove small" data-toggle="modal" data-target="#myModal3" onclick="saveDeleteDate()"></a>-->
+                                                           <a href="#" class="col-md-1 col-sm-1 fa fa-remove small" @click="deleteArticle()"></a>
+
                                                            <br>
                                                        </div>
                                                     </li>
@@ -451,6 +453,33 @@
                                 </div>
                             </div>
                         </div>
+
+
+                        <div id="updateArticilePanel" class="content updateArticle-section">
+
+                            <div class="panel">
+                                <div class="panel-body">
+                                    <form style="color: black">
+
+                                        <label for="title" class="col-sm-2 control-label">Title</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="updateTitle" v-model="save_update_title" placeholder="请输入日志标题">
+                                        </div>
+
+                                        <textarea name="editor2" id="editor2" rows="10" cols="80">
+
+                                        </textarea>
+                                    </form>
+
+                                    <div class="btn-group">
+                                        <button class="btn btn-success" id="confirmUpdateBT" @click="confirmUpdateArticle()" >Save</button>
+                                        <button id="cancelUpdateArticleBT" class="btn btn-default" >Back</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
 
                     </div>
                 </div>
@@ -571,6 +600,24 @@
                     </div><!-- /.modal -->
                 </div>
 
+                <div class="modal fade" id="myModal3" tabindex="1" role="dialog">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1>确定要删除此文章吗？</h1>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <button type="button" class="btn btn-danger col-md-6 col-xs-6" @click="deleteArticle">确定</button>
+                                    <button type="button" class="btn btn-default col-md-6 col-xs-6" data-dismiss="modal">取消</button>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+
+                            </div>
+                        </div><!-- /.modal-content -->
+                    </div><!-- /.modal -->
+                </div>
 
             </div>
         </div>
@@ -607,6 +654,7 @@
             // Replace the <textarea id="editor1"> with a CKEditor
             // instance, using default configuration.
              CKEDITOR.replace( 'editor1' );
+             CKEDITOR.replace( 'editor2' );
         </script>
 
 

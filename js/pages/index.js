@@ -9,6 +9,10 @@ var vm  = new Vue({
         one_content:'日志内容',
         one_date:'日志发表时间',
         new_title:'',
+        new_content:'',
+
+        save_update_title:'',
+        save_update_date:'',
 
         articles:[
 
@@ -92,7 +96,6 @@ var vm  = new Vue({
                     date: date
                 }
             }).then(function (response) {
-                console.log(response.body)
                 this.one_title = articleTitle;
                 this.one_content = response.data.data.content;
                 this.one_date = date;
@@ -103,7 +106,6 @@ var vm  = new Vue({
                 alert("获取博客失败，请刷新重试！")
             });
 
-            $("#myArticlePanel").slideUp("slow");
             $("#myArticlePanel").slideDown("slow");
             $(".logo-top-margin").animate({marginTop:'0'}, "slow");
             $(".logo-top-margin").animate({marginLeft:'0'}, "slow");
@@ -120,6 +122,7 @@ var vm  = new Vue({
                 alert("请输入日志标题！");
                 return;
             }
+
             var content= CKEDITOR.instances.editor1.getData();
             if(content=="") {
                 alert("请输入日志内容！");
@@ -153,18 +156,86 @@ var vm  = new Vue({
 
         updateArticle:function () {
             var date = $.trim(event.target.previousElementSibling.text);
-            alert(date);
+            this.save_update_date = date;
+
+            var articleTitle=$.trim(event.target.previousElementSibling.previousElementSibling.text);
+
+            $("#myArticlePanel").slideUp("slow");
+            $("#menu-5").slideUp("slow");
+            $("#updateArticilePanel").slideDown("slow");
+
+            this.$http.get("http://localhost:8080/article/articleContent", {
+                params: {
+                    date: date
+                }
+            }).then(function (response) {
+                this.save_update_title = articleTitle;
+                this.one_content = response.data.data.content;
+                this.save_update_date = date;
+
+                // this.new_title = this.one_title;
+                CKEDITOR.instances.editor2.setData(this.one_content);
+
+            }).catch(function (error) {
+                alert("获取博客失败，请刷新重试！")
+            });
+
+        },
+
+        confirmUpdateArticle:function () {
+
+            var content = CKEDITOR.instances.editor2.getData();
+
+            this.$http.post("http://localhost:8080/article/updateArticle",
+                {
+                    articleID:'',
+                    content:content,
+                    date:this.save_update_date,
+                    title:this.save_update_title
+                }
+             ).then(function (response) {
+                if(response.data.errorCode==0) {
+                    alert("修改文章成功");
+                    this.getArticleInfoForCatalogue();
+
+                    $("#updateArticilePanel").slideUp("slow");
+                    $("#menu-5").slideUp("slow");
+                    $("#menu-5").slideDown("slow");
+                    $(document.body).animate({scrollTop : 0},875);
+
+                }else{
+                    alert("修改文章失败");
+                }
+            }).catch(function (error) {
+                console.log(error);
+                alert("修改文章失败！");
+            });
+
+
         },
 
         deleteArticle:function () {
-            var date = $.trim(event.target.previousElementSibling.previousElementSibling.text);
-            this.$http.delete("http://localhost:8080/article/deteleArticle", {
-                    body:{date:date}
+            var deleteDate = $.trim(event.target.previousElementSibling.previousElementSibling.text);
+            var deleted_title = $.trim(event.target.previousElementSibling.previousElementSibling.previousElementSibling.text);
+
+            // var deleteDate = document.getElementById("deleteDate").text;
+            // alert(deleteDate);
+            // return;
+            this.$http.get("http://localhost:8080/article/deteleArticle", {
+                    params:{
+                        date:deleteDate
+                    }
                 }
             ).then(function (response) {
                 if(response.data.errorCode==0) {
                     alert("删除文章成功");
                     this.getArticleInfoForCatalogue();
+
+                    // $(function () { $('#myModal3').modal('hide')});
+
+                    if(this.one_title==deleted_title) {
+                        $("#myArticlePanel").slideUp("slow");
+                    }
 
                     $("#menu-5").slideUp("slow");
                     $("#menu-5").slideDown("slow");
@@ -172,12 +243,12 @@ var vm  = new Vue({
 
                 }else{
                     alert("删除文章失败");
-                    console.log(date)
+                    console.log(deleteDate)
                     console.log(response.data)
                 }
             }).catch(function (error) {
                 console.log(error);
-                console.log(date)
+                console.log(deleteDate)
                 alert("删除文章失败！");
             });
         }

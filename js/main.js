@@ -1,6 +1,6 @@
 (function($) {
 
-	"use strict";	
+	"use strict";
 
   	$(".main-menu a").click(function(){
 		var id =  $(this).attr('class');
@@ -8,7 +8,7 @@
 		$('a.active').removeClass('active');
     	$(this).addClass('active');
 		$("#menu-container .content").slideUp('slow');
-		$("#menu-container #menu-"+id[1]).slideDown('slow');		
+		$("#menu-container #menu-"+id[1]).slideDown('slow');
 		$("#menu-container .homepage").slideUp('slow');
 		return false;
 	});
@@ -101,8 +101,19 @@
         $(document.body).animate({scrollTop : 0},875);
     });
 
+
     $("#cancelAddArticleBT").click(function(){
         $("#writeArticilePanel").slideUp("slow");
+        $("#menu-5").slideDown("slow");
+        $(".logo-top-margin").animate({marginTop:'0'}, "slow");
+        $(".logo-top-margin").animate({marginLeft:'0'}, "slow");
+
+        //导航进度条回到顶部
+        $(document.body).animate({scrollTop : 0},875);
+    });
+
+    $("#cancelUpdateArticleBT").click(function(){
+        $("#updateArticilePanel").slideUp("slow");
         $("#menu-5").slideDown("slow");
         $(".logo-top-margin").animate({marginTop:'0'}, "slow");
         $(".logo-top-margin").animate({marginLeft:'0'}, "slow");
