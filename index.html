@@ -86,7 +86,7 @@
                         <a class="show-2 aboutbutton" href="#"><i class="fa fa-user"></i>About Me</a>
                     </li>
                     <li>
-                        <a class="show-3 projectbutton" href="#"><i class="fa fa-camera"></i>Photos</a>
+                        <a class="show-3 projectbutton" href="#" @click="getAllAlbums()"><i class="fa fa-camera"></i>Photos</a>
                     </li>
                 </ul>
             </div>
@@ -224,67 +224,42 @@
                         </div>
 
                         <div id="menu-3" class="content gallery-section">
-                            <div class="box-content">
-                                <h3 class="widget-title">Past Projects</h3>
-                                <div class="row">
-                                    <div class="col-md-4 col-sm-6 col-xs-12">
-                                        <div class="project-item">
-                                            <img src="dist/images/highschool.jpg" alt="">
-                                            <div class="project-hover">
-                                                <h4>Great Nature Capture</h4>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4 col-sm-6 col-xs-12">
-                                        <div class="project-item">
-                                            <img src="dist/images/jiasudu.jpg" alt="">
-                                            <div class="project-hover">
-                                                <h4>Another Image Caption</h4>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4 col-sm-6 col-xs-12">
-                                        <div class="project-item">
-                                            <img src="dist/images/oldfri2.jpg" alt="">
-                                            <div class="project-hover">
-                                                <h4>Great Nature Capture</h4>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4 col-sm-6 col-xs-12">
-                                        <div class="project-item">
-                                            <img src="dist/images/nju.jpg" alt="">
-                                            <div class="project-hover">
-                                                <h4>Great Nature Capture</h4>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4 col-sm-6 col-xs-12">
-                                        <div class="project-item">
-                                            <img src="dist/images/shuihuibeach.jpg" alt="">
-                                            <div class="project-hover">
-                                                <h4>Another Image Caption</h4>
-                                            </div>
-                                        </div>
+                            <div class="panel">
+
+                                <div class="panel-body">
+
+                                    <div class="row">
+                                        <ul v-for="album in albums">
+                                            <li>
+                                                <div class="col-sm-4">
+                                                    <button class="btn btn-default btn-large" >
+                                                        <img v-bind:src="album.coverSrc" alt="图片路径" align="center" onload="DrawImage(this,200,200)">
+                                                        <h2 style="font-size:26px">{{album.albumName}}</h2>
+                                                        <br>
+                                                        <p style="font-size:14px;color:black">{{album.albumDescription}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small >{{album.createDate}}</small></p>
+                                                    </button>
+                                                    <br>
+                                                    <br>
+
+                                                    <!--<h2>{{album.albumName}}</h2>-->
+                                                </div>
+
+                                            </li>
+                                        </ul>
                                     </div>
 
-                                    <div class="col-md-4 col-sm-6 col-xs-12">
-                                        <div class="project-item">
-                                            <img src="dist/images/imissu.jpg" alt="">
-                                            <div class="project-hover">
-                                                <h4>Another Image Caption</h4>
-                                            </div>
-                                        </div>
-                                    </div>
                                 </div>
-                                <div class="project-pages">
-                                    <ul>
-                                        <li><a href="#">1</a></li>
-                                        <li><a href="#">2</a></li>
-                                        <li><a href="#">3</a></li>
-                                        <li><a href="#">...</a></li>
-                                    </ul>
-                                </div>
+
+
+                                <!--<div class="row" v-for="album in albums">-->
+                                    <!--<div class="col-sm-4">-->
+                                        <!--<h2>{{album.albumName}}</h2>-->
+                                        <!--<p>{{album.albumDescription}}<small >{{album.createDate}}</small></p>-->
+
+                                    <!--</div>-->
+
+                                <!--</div>-->
+
                             </div>
                         </div>
 
@@ -507,7 +482,7 @@
                                 <a class="show-2 aboutbutton" href="#"><i class="fa fa-user"></i>About Me</a>
                             </li>
                             <li>
-                                <a class="show-3 projectbutton" href="#"><i class="fa fa-camera"></i>Photos</a>
+                                <a class="show-3 projectbutton" href="#" @click="getAllAlbums()"><i class="fa fa-camera"></i>Photos</a>
                             </li>
                         </ul>
                     </nav>
@@ -669,6 +644,66 @@
 
         <!--<script src="js/plugins.js"></script>-->
         <script src="js/main.js"></script>
+
+        <script  language="javascript">
+
+            function AutoSize(Img, maxWidth, maxHeight) {
+                var image = new Image();
+                //原图片原始地址（用于获取原图片的真实宽高，当<img>标签指定了宽、高时不受影响）
+                image.src = Img.src;
+                // 当图片比图片框小时不做任何改变
+                if (image.width < maxWidth&& image.height < maxHeight) {
+                    Img.width = image.width;
+                    Img.height = image.height;
+                }
+                else //原图片宽高比例 大于 图片框宽高比例,则以框的宽为标准缩放，反之以框的高为标准缩放
+                {
+                    if (maxWidth/ maxHeight  <= image.width / image.height) //原图片宽高比例 大于 图片框宽高比例
+                    {
+                        Img.width = maxWidth;   //以框的宽度为标准
+                        Img.height = maxWidth* (image.height / image.width);
+                    }
+                    else {   //原图片宽高比例 小于 图片框宽高比例
+                        Img.width = maxHeight  * (image.width / image.height);
+                        Img.height = maxHeight  ;   //以框的高度为标准
+                    }
+                }
+            }
+
+            //显示缩略图
+            function DrawImage(ImgD,width_s,height_s){
+                /*var width_s=139;
+                var height_s=104;
+                */
+                var image=new Image();
+                image.src=ImgD.src;
+                if(image.width>0 && image.height>0){
+                    flag=true;
+                    if(image.width/image.height>=width_s/height_s){
+                        if(image.width>width_s){
+                            ImgD.width=width_s;
+                            ImgD.height=(image.height*width_s)/image.width;
+                        }else{
+                            ImgD.width=image.width;
+                            ImgD.height=image.height;
+                        }
+                    }
+                    else{
+                        if(image.height>height_s){
+                            ImgD.height=height_s;
+                            ImgD.width=(image.width*height_s)/image.height;
+                        }else{
+                            ImgD.width=image.width;
+                            ImgD.height=image.height;
+                        }
+                    }
+                }
+                /*else{
+                ImgD.src="";
+                ImgD.alt=""
+                }*/
+            }
+        </script>
 
 
         <!-- templatemo 439 rectangle -->

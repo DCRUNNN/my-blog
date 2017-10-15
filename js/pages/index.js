@@ -16,7 +16,15 @@ var vm  = new Vue({
 
         articles:[
 
-        ]
+        ],
+
+        albums:[
+
+        ],
+
+        photos:[
+
+        ],
 
     },
     methods:{
@@ -252,7 +260,17 @@ var vm  = new Vue({
                 console.log(deleteDate)
                 alert("删除文章失败！");
             });
-        }
+        },
+
+        getAllAlbums:function () {
+            this.$http.get("http://localhost:8080/photo/getAllAlbums")
+                .then(function (response) {
+                    this.albums = response.data.data;
+                    console.log(this.albums)
+                }).catch(function (error) {
+                alert("获取相册信息失败，请刷新重试！");
+            })
+        },
 
     },
 });
