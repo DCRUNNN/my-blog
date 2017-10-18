@@ -26,6 +26,9 @@ var vm  = new Vue({
 
         ],
 
+        all: 20, //总页数
+        cur: 1,//当前页码
+
     },
     methods:{
 
@@ -266,11 +269,80 @@ var vm  = new Vue({
             this.$http.get("http://localhost:8080/photo/getAllAlbums")
                 .then(function (response) {
                     this.albums = response.data.data;
-                    console.log(this.albums)
+                    console.log(this.albums);
                 }).catch(function (error) {
                 alert("获取相册信息失败，请刷新重试！");
             })
         },
 
+        showPhotosInAlbum:function (event) {
+            this.$http.get("http://localhost:8080/photo/getPhotoByAlbumName", {
+                params: {
+                    albumName: event
+                }
+            }).then(function (response) {
+                this.photos = response.data.data;
+                console.log(this.photos);
+
+                $("#menu-3").slideUp('slow');
+                $("#showPhotosInAlbum").slideDown('slow');
+                $(".logo-top-margin").animate({marginTop:'0'}, "slow");
+                $(".logo-top-margin").animate({marginLeft:'0'}, "slow");
+                //导航进度条回到顶部
+                $(document.body).animate({scrollTop : 0},875);
+
+            }).catch(function (error) {
+                alert("获取该相册图片失败，请刷新重试！");
+            });
+        },
+
+
+        btnClick: function(data){//页码点击事件
+            if(data != this.cur){
+                this.cur = data
+            }
+        }
+
     },
+
+
+    computed: {
+        indexs: function () {
+            var left = 1
+            var right = this.all
+            var ar = []
+            if (this.all >= 11) {
+                if (this.cur > 5 && this.cur < this.all - 4) {
+                    left = this.cur - 5
+                    right = this.cur + 4
+                } else {
+                    if (this.cur <= 5) {
+                        left = 1
+                        right = 10
+                    } else {
+                        right = this.all
+                        left = this.all - 9
+                    }
+                }
+            }
+            while (left <= right) {
+                ar.push(left)
+                left++
+            }
+            return ar
+        },
+        showLast: function () {
+            if (this.cur == this.all) {
+                return false
+            }
+            return true
+        },
+        showFirst: function () {
+            if (this.cur == 1) {
+                return false
+            }
+            return true
+        },
+
+    }
 });

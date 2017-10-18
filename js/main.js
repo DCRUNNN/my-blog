@@ -122,6 +122,15 @@
         $(document.body).animate({scrollTop : 0},875);
     });
 
+    $("#showPhotosInAlbumBT").click(function(){
+
+        $("#menu-3").slideUp('slow');
+        $("#showPhotosInAlbum").slideDown('slow');
+        alert(666);
+        $(".logo-top-margin").animate({marginTop:'0'}, "slow");
+        $(".logo-top-margin").animate({marginLeft:'0'}, "slow");
+    });
+
 
 
 
